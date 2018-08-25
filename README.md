@@ -1,0 +1,2 @@
+# CIDR2ProxyCap
+将CIDR列表转换为ProxyCap配置文件片段
