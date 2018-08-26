@@ -5,7 +5,7 @@ import (
     "fmt"
     "log"
     "os"
-    "regexp"
+    "net"
 )
 
 func main() {
@@ -15,7 +15,6 @@ func main() {
         os.Exit(1)
     }
 
-    regex := regexp.MustCompile(`([0123456789ABCDEF:.]+)/(\d+)`)
     pattern := `        <ip_range ip="%v" mask="%v" />
 `
 
@@ -34,9 +33,11 @@ func main() {
     scanner := bufio.NewScanner(input)
     for scanner.Scan() {
         line := scanner.Text()
-        if regex.MatchString(line) {
-            sub := regex.FindStringSubmatch(line)
-            output.WriteString(fmt.Sprintf(pattern, sub[1], sub[2]))
+        _, ipNet, err := net.ParseCIDR(line)
+        if err == nil {
+            ip := ipNet.IP
+            ones, _ := ipNet.Mask.Size()
+            output.WriteString(fmt.Sprintf(pattern, ip, ones))
         }
     }
 
