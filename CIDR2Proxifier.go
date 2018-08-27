@@ -37,8 +37,16 @@ func main() {
             ones, bits := ipNet.Mask.Size()
             end := net.IP(make([]byte, len(ipNet.IP)))
             copy(end, start)
-            for i := ones; i < bits; i++ {
-                end[i / 8] |= 1 << (uint32(7 - i % 8))
+            for i := ones / 8; i < (bits + 7) / 8; i++ {
+                mask := byte(0xff)
+                if i * 8 < ones {
+                    mask >>= uint32(ones - i * 8)
+                }
+                if (i + 1) * 8 > bits {
+                    mask >>= uint32((i + 1) * 8 - bits)
+                    mask <<= uint32((i + 1) * 8 - bits)
+                }
+                end[i] = end[i] | mask
             }
             if first {
                 first = false
