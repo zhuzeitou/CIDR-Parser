@@ -38,7 +38,7 @@ func main() {
             end := net.IP(make([]byte, len(ipNet.IP)))
             copy(end, start)
             for i := ones; i < bits; i++ {
-                end[i / 8] |= 1 << (uint32(i % 8))
+                end[i / 8] |= 1 << (uint32(7 - i % 8))
             }
             if first {
                 first = false
