@@ -1,5 +1,5 @@
 # CIDR-Parser
-将CIDR列表转换为ProxyCap或Proxifier配置文件片段，包含以下两部分
+将CIDR列表转换为ProxyCap或Proxifier配置文件片段，包含[CIDR2ProxyCap](#cidr2proxycap)和[CIDR2Proxifier](#cidr2proxifier)两部分
 
 # CIDR2ProxyCap
 将CIDR列表转换为ProxyCap配置文件片段
